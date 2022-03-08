@@ -14,38 +14,21 @@ Vue.component('catalog',{
                     console.log(error)
                 })
         },
-        putJson(url,data){
-            return fetch(url,{
-                method: 'PUT',
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body: JSON.stringify(data)
-            }).then(result => result.json())
-              .catch(error =>{
-                //   this.$refs.error.setError(error)
-                  console.log(error)
-              })
-        },
         addProduct(product){
-            var clicked = product.id;
-            var ids = this.products.map(el=> el.id);
-            var clickedProductIndex = ids.indexOf(clicked);
-            var clickedItem = this.products[clickedProductIndex]
-            var idInBasket = this.cartItem.map(el=> el.id); // кликнутый элемент найденный в массиве товаров
+            let find = this.cartItem.find(el => el.id === product.id );
+            if(find){
+                this.$root.putJson(`api/cart/${find.id}`,{count:1});
 
-            if(idInBasket.includes(clicked)){
-                clickedItem.count++
-                console.log('увеличили')
-                console.log(this.cartItem)
+                find.count++;
             }else{
-                clickedItem.count=1
-                this.cartItem.push(clickedItem);   // добавляем кликнутый элемент в  массив корзины 
-                console.log('добавили')
-                console.log(this.cartItem)
-                this.putJson(`/api/cart`,this.cartItem)
+                let prod = Object.assign({count:1},product)
+                this.$root.postJson('/api/cart',prod)
+                    .then(data =>{
+                        if(data.result ===1){
+                            this.cartItem.push(prod)
+                        }
+                    })
             }
-
         }
     },
     computed:{},

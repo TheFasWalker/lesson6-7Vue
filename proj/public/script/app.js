@@ -50,6 +50,31 @@ const app =new Vue({
                   console.log(error)
               })
         },
+        addProduct(product){
+            var clicked = product.id;
+            var ids = this.products.map(el=> el.id);
+            var clickedProductIndex = ids.indexOf(clicked);
+            var clickedItem = this.products[clickedProductIndex]
+            var idInBasket = this.cartItem.map(el=> el.id); // кликнутый элемент найденный в массиве товаров
+            if(idInBasket.includes(clicked)){
+                clickedItem.count++
+                // this.$root.postJson(`/api/cart`,this.cartItem)
+                console.log('увеличили')
+                console.log(this.cartItem)
+                this.$root.putJson(`/api/cart/:${idInBasket}`,this.cartItem)
+
+            }else{
+                clickedItem.count=1
+                this.cartItem.push(clickedItem);   // добавляем кликнутый элемент в  массив корзины 
+                console.log('добавили')
+                console.log(this.cartItem)
+                // this.$root.postJson(`/api/cart`,this.cartItem)
+                this.$root.postJson(`/api/cart`,this.cartItem)
+
+            }
+            console.log(cartItem)
+
+        }
     },
  
     template:`

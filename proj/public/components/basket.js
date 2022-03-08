@@ -15,7 +15,8 @@ Vue.component('basket',{
                 .catch(error =>{
                     console.log(error)
                 })
-        },
+        }
+        
     },
     computed:{},
     mounted(){},
@@ -39,6 +40,7 @@ Vue.component('basket',{
                     <div class="card-item-info">
                         <p class="product__title">{{item.name}}</p>
                         <p class="product__price">{{item.price}}</p>
+                        <p>количество {{item.count}}</p>
                     </div>
                     <button class="card-item-del" :data-id="item.id">del</button>
                 </div>
@@ -46,3 +48,4 @@ Vue.component('basket',{
         </div>
     `
 });
+

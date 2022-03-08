@@ -30,7 +30,7 @@ app.post('/api/cart', (req, res) => {
             cart.push(req.body);
             fs.writeFile('./server/db/basket.json', JSON.stringify(cart), (err) => {
                 if (err) res.end(JSON.stringify({ result: 0, err }));
-                else res.end(JSON.stringify({ result: 1 }));
+                else res.end(JSON.stringify({ result: 1 },null,2));
             });
         }
     });
@@ -39,10 +39,11 @@ app.put('/api/cart/:id', (req, res) => {
     fs.readFile('./server/db/basket.json', 'utf-8', (err, data) => {
         if (err) res.send(JSON.stringify({ result: 0, err }));
         else {
+            const itemId = req.params.id
             const cart = JSON.parse(data);
-            const find = cart.contents.find(good => good.id_product === Number(req.params.id));
-            find.quantity += req.body.quantity;
-
+            var basketIds = cart.map(el=>el.id);
+            var basketAdd = basketIds.indexOf(itemId)
+            cart[basketAdd].count +=1
             fs.writeFile('./server/db/basket.json', JSON.stringify(cart), (err) => {
                 if (err) res.end(JSON.stringify({ result: 0, err }));
                 else res.end(JSON.stringify({ result: 1 }));
