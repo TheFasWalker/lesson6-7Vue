@@ -1,0 +1,32 @@
+[
+    {
+        "id":"001",
+        "name":"Code Names",
+        "price":"1990",
+        "image":"public/images/catalog/1.jpg"
+    },
+    {
+        "id":"002",
+        "name":"Code Names addition",
+        "price":"190",
+        "image":"public/images/catalog/2.jpg"
+    },
+    {
+        "id":"003",
+        "name":"Code Names addition pack",
+        "price":"200",
+        "image":"public/images/catalog/3.jpg"
+    },
+    {
+        "id":"004",
+        "name":"safe dino",
+        "price":"1500",
+        "image":"public/images/catalog/4.jpg"
+    },
+    {
+        "id":"005",
+        "name":"gnomes pests",
+        "price":"500",
+        "image":"public/images/catalog/5.jpg"
+    }
+]

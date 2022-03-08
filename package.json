@@ -1,0 +1,22 @@
+{
+  "name": "lesson6-7vue",
+  "version": "1.0.0",
+  "description": "lesson6-7Vue",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheFasWalker/lesson6-7Vue.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheFasWalker/lesson6-7Vue/issues"
+  },
+  "homepage": "https://github.com/TheFasWalker/lesson6-7Vue#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
