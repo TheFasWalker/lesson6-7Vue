@@ -14,17 +14,36 @@ Vue.component('catalog',{
                     console.log(error)
                 })
         },
+        putJson(url,data){
+            return fetch(url,{
+                method: 'PUT',
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body: JSON.stringify(data)
+            }).then(result => result.json())
+              .catch(error =>{
+                //   this.$refs.error.setError(error)
+                  console.log(error)
+              })
+        },
         addProduct(product){
             var clicked = product.id;
             var ids = this.products.map(el=> el.id);
             var clickedProductIndex = ids.indexOf(clicked);
             var clickedItem = this.products[clickedProductIndex]
-            var idInBasket = this.cartItem.map(el=> el.id);
+            var idInBasket = this.cartItem.map(el=> el.id); // кликнутый элемент найденный в массиве товаров
+
             if(idInBasket.includes(clicked)){
                 clickedItem.count++
+                console.log('увеличили')
+                console.log(this.cartItem)
             }else{
                 clickedItem.count=1
                 this.cartItem.push(clickedItem);   // добавляем кликнутый элемент в  массив корзины 
+                console.log('добавили')
+                console.log(this.cartItem)
+                this.putJson(`/api/cart`,this.cartItem)
             }
 
         }
@@ -32,7 +51,7 @@ Vue.component('catalog',{
     computed:{},
     mounted(){},
     created(){
-        this.getJson('/api/products')
+        this.getJson(this.catalogUrl)
             .then(data =>{
                 for(let el of data){
                     this.products.push(el)
