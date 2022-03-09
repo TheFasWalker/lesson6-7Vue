@@ -15,6 +15,10 @@ Vue.component('basket',{
                 .catch(error =>{
                     console.log(error)
                 })
+        },
+        deleteItem(product){
+            console.log(product.id)
+            this.$root.deleteJson(`api/cart/${product.id}`,{count:1});
         }
         
     },
@@ -42,7 +46,11 @@ Vue.component('basket',{
                         <p class="product__price">{{item.price}}</p>
                         <p>количество {{item.count}}</p>
                     </div>
-                    <button class="card-item-del" :data-id="item.id">del</button>
+                    <button
+                     class="card-item-del"
+                      :data-id="item.id"
+                        @click="deleteItem(item)"
+                      >del</button>
                 </div>
             </div>
         </div>

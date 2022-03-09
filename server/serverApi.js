@@ -36,6 +36,7 @@ app.post('/api/cart', (req, res) => {
     });
 });
 app.put('/api/cart/:id', (req, res) => {
+    console.log('увеличение количества')
     fs.readFile('./server/db/basket.json', 'utf-8', (err, data) => {
         if (err) res.send(JSON.stringify({ result: 0, err }));
         else {
@@ -51,6 +52,27 @@ app.put('/api/cart/:id', (req, res) => {
         }
     });
 });
+app.delete('/api/cart/:id', (req, res)=>{
+    console.log('Удаление товара')
+    fs.readFile('./server/db/basket.json', 'utf-8', (err, data) => {
+        if(err) res.send(JSON.stringify({result:0, err}));
+        else{
+            const itemId = req.params.id; //  достаём id элемента для удаления
+            const cart = JSON.parse(data); // распарсили  корзину  для итерации
+            const basketIds = cart.map(el=>el.id); // получаем массив id товаров в корзине
+            const basketItem = basketIds.indexOf(itemId) // находим сам элемент в корзине
+            if(cart[basketItem].count >= 2){             // проверяем количество
+                cart[basketItem].count -=1              // если количество >=2 то уменьшаем количество на 1
+            }else{
+                delete cart[basketItem];
+            }
+            fs.writeFile('./server/db/basket.json', JSON.stringify(cart), (err) => {
+                if (err) res.end(JSON.stringify({ result: 0, err }));
+                else res.end(JSON.stringify({ result: 1 }));
+            });
+        }
+    })
+})
 
 
 app.listen(5555, () => {
