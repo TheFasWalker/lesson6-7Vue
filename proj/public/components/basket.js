@@ -32,6 +32,9 @@ Vue.component('basket',{
                 }
             })
     },
+    watch:{
+        cartItems:[]
+    },
     template:`
         <div class="header__basket" :class="{hiddenBlock : basketVisibility}">
             <div class="header__basker-container">

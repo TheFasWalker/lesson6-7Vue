@@ -64,8 +64,11 @@ app.delete('/api/cart/:id', (req, res)=>{
             if(cart[basketItem].count >= 2){             // проверяем количество
                 cart[basketItem].count -=1              // если количество >=2 то уменьшаем количество на 1
             }else{
-                delete cart[basketItem];
+                 cart.splice(basketItem);
+                console.log('пусто')
+
             }
+
             fs.writeFile('./server/db/basket.json', JSON.stringify(cart), (err) => {
                 if (err) res.end(JSON.stringify({ result: 0, err }));
                 else res.end(JSON.stringify({ result: 1 }));
